@@ -1,0 +1,43 @@
+mkdir cert
+
+cd cert
+
+touch gen.sh
+
+chmod +x gen.sh
+
+openssl req -x509 -newkey rsa:4096 -days 365 -keyout ca-key.pem -out ca-cert.pem
+
+cat ca-key.pem
+
+cat ca-cert.pem
+
+openssl x509 -in ca-cert.pem -noout -text
+
+./gen.sh
+
+openssl req -newkey rsa:4096 -nodes -keyout server-key.pem -out server-req.pem -subj "/C=LB/ST=Lebanon/L=Lebanon/O=company/OU=company/CN=ServerName/emailAddress=myemail@hotmail.com"
+
+openssl x509 -req -in server-req.pem -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out server-cert.pem
+
+openssl x509 -in server-cert.pem -noout -text
+
+openssl x509 -req -in server-req.pem -days 60 -CA ca-cert.pem -CAkey ca-key.pem -CAcreateserial -out server-cert.pem -extfile server-ext.cnf
+
+./gen.sh
+
+#check validity of certificate
+openssl verify -CAfile ca-cert.pem server-cert.pem
+
+openssl req -x509 -newkey rsa:4096 -days 365 -nodes -keyout ca-key.pem -out client-cert.pem -subj "/C=LB/ST=Lebanon/L=Lebanon/O=company/OU=company/CN=Name/emailAddress=myemail@hotmail.com"
+
+./gen.sh
+
+
+-nodes: it won't ask about the password anymore (good for development phase)
+
+
+
+
+
+
