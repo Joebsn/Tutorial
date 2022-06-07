@@ -1,0 +1,5 @@
+/mnt/d/codes/murex/grpcexercicec++/helloworldusingssl/cmake/build/CMakeFiles/hw_grpc_proto.dir
+/mnt/d/codes/murex/grpcexercicec++/helloworldusingssl/cmake/build/CMakeFiles/rebuild_cache.dir
+/mnt/d/codes/murex/grpcexercicec++/helloworldusingssl/cmake/build/CMakeFiles/greeter_server.dir
+/mnt/d/codes/murex/grpcexercicec++/helloworldusingssl/cmake/build/CMakeFiles/greeter_client.dir
+/mnt/d/codes/murex/grpcexercicec++/helloworldusingssl/cmake/build/CMakeFiles/edit_cache.dir

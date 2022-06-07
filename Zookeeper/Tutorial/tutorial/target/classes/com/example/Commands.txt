@@ -1,0 +1,50 @@
+for ZKCreate.java:
+After running the code, open ubuntu and run the 3 following commands:
+1- cd /mnt/d/zookeeperapache/apache-zookeeper-3.8.0-bin
+2- bin/zkCli.sh
+3- get /MyFirstZnode
+We get My first zookeeper app in ubuntu
+
+
+
+Run  ZKExists.java and get the following message:
+Node exists and the node version is 0 in vscode
+
+
+
+
+Run ZKGetData.java and get the following message:
+My first zookeeper app
+then go to ubuntu and run:
+1- cd /mnt/d/zookeeperapache/apache-zookeeper-3.8.0-bin
+2- bin/zkCli.sh
+3-  set /MyFirstZnode Hello
+We'll get the output Hello in vscode
+
+
+
+
+Run ZKSetData.java then go to ubuntu and run:
+1- cd /mnt/d/zookeeperapache/apache-zookeeper-3.8.0-bin
+2- bin/zkCli.sh
+3- get /MyFirstZnode
+We'll get the output Success in ubuntu
+
+
+
+Run ZKGetChildren.java then go to ubuntu and run:
+1- cd /mnt/d/zookeeperapache/apache-zookeeper-3.8.0-bin
+2- bin/zkCli.sh
+3- create /MyFirstZnode/myfirstsubnode Hi
+4- create /MyFirstZnode/mysecondsubmode Hi
+We'll get the output:
+myfirstsubnode
+mysecondsubnode
+
+
+
+
+Delete a Znode
+
+
+

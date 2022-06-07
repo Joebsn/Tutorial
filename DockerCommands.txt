@@ -1,0 +1,209 @@
+Settings not opening: run in cmd: "C:\Program Files\Docker\Docker\DockerCli.exe" -SwitchDaemon
+To allow all connections without a password use: docker run -e POSTGRES_HOST_AUTH_METHOD=trust postgres:9.6
+
+Docker hub website
+
+docker build --help
+docker run --help
+docker logs --help
+
+
+See all the running containers: docker ps
+see all images on the laptop: docker images
+display all containers running or not running: docker ps -a
+docker run to start container from an image
+
+
+Get from docker hub: docker run postgres:9.6
+Get from docker hub: docker run postgres:10.10
+download image: docker pull redis
+
+
+
+
+Create container to connect to application (start image in a container): docker run redis
+
+run container in detached mode (gives the container ID) (runs it and we can still work in the same cmd): docker run -d redis
+
+
+restart container of ID 1dafa5b79a3b: docker stop 1dafa5b79a3b
+start container of ID 1dafa5b79a3b: docker start 1dafa5b79a3b
+
+
+pull image and start container so it does docker pull then docker start: docker run redis:4.0
+
+Binding between the host if running two redis for example so they won't have the same port(host port: 6000, container port: 6379): docker run -p 6000:6379 redis
+Binding between the host if running two redis for example so they won't have the same port(host port: 6000, container port: 6379) in detached mode: docker run -p 6000:6379 -d redis
+Binding between the host if running two redis for example so they won't have the same port(host port: 6000, container port: 6379) in detached mode: docker run -p6001:6379 -d redis:4.0
+
+
+see all logs and errors(9c15204f1e1d is the container ID): docker logs 9c15204f1e1d
+see all logs and errors(abtafbueanc is the container name): docker logs abtafbueanc 
+
+
+Create container with specific name (redis-older is the name we specified): docker run -d -p6001:6379 --name redis-older redis:4.0
+
+
+
+get terminal of running container (b24f3dd00bfd is the container ID): docker exec -it b24f3dd00bfd /bin/bash   so we can run env masalan
+get terminal of running container (redis-olderis the container name): docker exec -it redis-older /bin/bash
+exit the terminal: exit
+
+
+
+
+
+pull mongo db: docker pull mongo
+pull mongo express db: docker pull mongo-express
+
+
+
+Docker network: mongodb and mongo express talk using the container name
+
+See all docker network already provided by docker: Docker network ls
+
+Create docker network for mongoDb and mongo-express and call it mongo-network: docker network create mongo-network
+
+
+
+Run container from image(we gave username, password of the database and the name of the container which is mongodb and we told it on which network to be):
+for mongodb:
+docker run -p 27017:27017 -d -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password --name mongodb --network mongo-network mongo
+
+For mongoexpress:
+docker run -d -p 8081:8081 -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin -e ME_CONFIG_MONGODB_ADMINPASSWORD=password --net mongo-network --name mongo-express -e ME_CONFIG_MONGODB_SERVER=mongodb mongo-express
+
+see all logs to check enno el run zabat(9c15204f1e1d is the container ID): docker logs 9c15204f1e1d
+
+
+Docker compose run the file: docker-compose -f D:\Codes\Docker\mongo.yaml up
+Run the server: node server.js
+
+//http://localhost:8081 in the browser and create user-account database then create a user collection in the database user-account
+http://localhost:8080 in the browser and create user-account database then create a user collection in the database user-account
+http://localhost:3000 in the browser
+
+
+To see the errors(container_id is 2571298461): docker logs 2571298461
+
+Docker compose creates the network la halo
+Docker compose run the file: docker-compose -f D:\Codes\Docker\mongo.yaml up
+Docker compose run the file with -d: docker-compose -f D:\Codes\Docker\mongo.yaml up -d
+
+
+Shut down all the containers and the networks using docker-compose: docker-compose -f D:\Codes\Docker\mongo.yaml down
+
+
+
+Create a Docker Image on the local environment using DockerFile:
+
+Build image using Dockerfile (. yaane current directory bel e5ir so lezim koun bel directory el lezim so D: codes/docker): docker build -t my-app:1.0 .
+
+docker run my-app:1.0
+
+If we change DockerFile, we have to delete the image build and recreated it
+
+To rerun the command: docker build -t my-app:1.0 .   We have to delete container then image to rerun the Dockerfile:
+stop the container(we give the Container ID): docker stop 21b2a1141557
+delete container(we give the Container ID): docker rm 21b2a1141557
+delete image(we give the image ID): docker rmi 309a77acebe5
+
+To see the container ID: docker ps
+Put the container ID after logs keyword: docker logs 21753f8115ea
+
+
+Container ID is 21753f8115ea: docker exec -it 21753f8115ea /bin/sh
+We can do: ls , we can do: env to see the envireonmental variables, we can do exit to exit the terminal, we can do ls /home/app/
+
+
+docker images
+my-app is the image name: docker run my-app:1.0
+
+
+Push image into repository in aws: (see view push commands in aws account)
+(aws ecr get-login --no-include-email --region eu-central-1)
+
+Push to AWS repository with the name my-app:
+docker images
+//tag will copy the images and create the same image as my-app but with a full name)
+docker tag my-app:1.0 (osas in: see view push commands in aws account)
+docker push (the full name that was written)
+//The image is now in the repository on AWS
+
+
+
+//If we changed bel files, update the changes to AWS
+//creating new image of version 1.1
+docker build -t my-app:1.1 
+docker images
+docker tag my-app:1.1 (osas in: see view push commands in aws account)
+docker images
+docker push (the full name that was written)
+//The image is now updated in the repository on AWS so sar fi 2 versions: 1.0 and 1.1 in the repository
+
+
+
+
+Deploy app to the server:
+
+Docker compose file on the development server (create the yaml file bel directory): vim  mongo.yaml
+Start the 3 containers: docker-compose -f mongo.yaml up
+
+
+
+Volumes: used metel to save data cz database ha trouh kell marra when we restart the container
+we created volume mongo-data: local so locally
+mongoDb stores its data in data/db (seen from the internet hasab el database)
+docker-compose -f mongo.yaml up
+
+
+
+
+Push to docker repository (we have to attach pmckee first):
+docker tag hello-world pmckee/hello-world
+docker images
+docker push pmckee/hello-world
+
+Remove image: docker rmi pmckee/hello-world
+Pull image: docker pull pmckee/hello-world
+
+
+Login: docker login -u 7455348
+
+so in this example: 
+docker tag my-app:1.0 74525348/my-app:1.0
+docker push 74525348/my-app:1.0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

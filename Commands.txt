@@ -1,0 +1,35 @@
+docker pull mcr.microsoft.com/mssql/server
+
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=qw123QE!@4" --name sqldatabase -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-CU15-ubuntu-20.04
+
+In Visual Studio: View then SQL Server Object Explorer, Add SQL server:
+Server Name: localhost, 1433
+SQL Server Authentication
+UserName: SA
+Password: qw123QE!@4
+
+Then we can create the tables, run scripts....
+
+string ConnectionString = "Server=localhost,1433;Database=master;User=sa;Password=qw123QE!@4;";
+
+
+
+To write queries in cmd:
+D:\Codes\DockerKubernetes>docker exec -it sqldatabase  "bash"
+mssql@fd84e6930475:/$ /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P 'qw123QE!@4'
+1> select * from address
+2> Go
+(we'll see the result)
+
+1> INSERT INTO [dbo].[Address] VALUES (3,'Lebanon','Lebanon')
+2> Go
+1> select * from address
+2> Go
+
+1> INSERT INTO [dbo].[Users] VALUES ('FirstName','LastName',123579,'2000-1-25',1,100000)
+2> go
+1> select * from Users
+2> Go
+
+
+1> exit

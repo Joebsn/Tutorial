@@ -1,0 +1,16 @@
+SSL link used for helloworldusingSSL: https://github.com/grpc/grpc/issues/9593 (we created gen-certs.sh script that will create the certificates)
+
+
+GRPC Reflections:
+
+Add submodules
+$ git submodule update --init
+
+Install libflags-dev
+$ sudo apt-get install libgflags-dev
+
+Compile grpc
+$ mkdir -p cmake/build
+$ cd cmake/build
+$ cmake -DgRPC_BUILD_TESTS=ON ../..
+$ make grpc_cli

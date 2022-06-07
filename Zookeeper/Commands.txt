@@ -1,0 +1,145 @@
+vi ~/.bashrc
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/bin/java
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+
+Go to the following directory: /mnt/d/zookeeperapache/apache-zookeeper-3.8.0-bin 
+
+//Start ZooKeeper server
+bin/zkServer.sh start
+
+//Start CLI
+bin/zkCli.sh
+
+//Stop ZooKeeper Server
+bin/zkServer.sh stop
+
+
+To perform ZooKeeper CLI operations, first turn on your ZooKeeper server (“bin/zkServer.sh start”) and then, ZooKeeper client (“bin/zkCli.sh”)
+
+
+//Create Znodes: persistant, sequential or ephemeral
+
+//Create persistant Znodes: syntax: create /path /data
+create /FirstZnode “Myfirstzookeeper-app”
+
+//Create Sequential Znodes: syntax: create -s /path /data
+create -s /FirstZnode second-data
+
+//Create Ephemeral Znodes: syntax: create -e /path /data
+create -e /SecondZnode “Ephemeral-data”
+
+
+
+
+//Get Data: returns the associated data of the znode and metadata of the specified znode: Syntax: get /path 
+get /FirstZnode
+get -s -w /FirstZnode
+get -s /FirstZnode
+
+
+//To access a sequential znode, you must enter the full path of the znode
+get /FirstZnode0000000023
+get -s -w /FirstZnode0000000001
+get -s /FirstZnode0000000001
+get -w /FirstZnode0000000001
+
+
+
+//Watch
+//Watches show a notification when the specified znode or znode’s children data changes. You can set a watch only in get command.  Syntax = get /path [watch] 1
+get /FirstZnode 1
+get -s -w /FirstZnode 1
+get -s -w /SecondZnode 1
+
+
+
+
+//Set Data
+//Set the data of the specified znode. Once you finish this set operation, you can check the data using the get CLI command. Syntax: set /path /data
+set /SecondZnode Data-updated
+set -s /SecondZnode Data-updated
+
+
+
+
+//Create Children / Sub-znode
+//Creating children is similar to creating new znodes. The only difference is that the path of the child znode will have the parent path as well. Syntax: create /parent/path/subnode/path /data
+create /FirstZnode/Child1 firstchildren
+create /FirstZnode/Child1 “firstchildren”
+create /FirstZnode/Child2 “secondchildren”
+
+
+
+
+//List Children: This command is used to list and display the children of a znode. Syntax: ls /path
+ls /FirstZnode
+ls /
+
+
+
+//Check Status: Status describes the metadata of a specified znode. It contains details such as Timestamp, Version number, ACL, Data length, and Children znode.    Syntax: stat /path
+stat /FirstZnode
+
+
+
+//Remove a Znode.   Syntax: rmr /path
+rmr /FirstZnode
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ bin/zkCli.sh -server 127.0.0.1:2181
+
+//create the ephemeral-sequential_node
+create -s -e /ephemeral_sequential_node mydata
+
+//create the container node.When the last child of a container is deleted,the container becomes to be deleted
+create -c /container_node mydata
+
+delete /container_node/child_1
+
+help
+
+sync /
+
+version
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
