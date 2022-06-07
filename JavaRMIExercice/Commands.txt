@@ -1,0 +1,4 @@
+javac -d  Classes *.java
+start rmiregistry 4000
+java Server
+java Client
